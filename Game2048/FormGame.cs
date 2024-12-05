@@ -172,7 +172,6 @@ namespace Game2048
                     }
         }
 
-
         void DownStep()
         {
             for (int j = 0; j < len; j++) 
@@ -257,8 +256,6 @@ namespace Game2048
             }
         }
 
-
-       
 
         bool haveEmptySlot()
         {

@@ -10,6 +10,7 @@ namespace Game2048
     {
         public static int len = 4;
         public static int record = 0;
+        public static int fasfdf = 0;
         
     }
     class Forms
