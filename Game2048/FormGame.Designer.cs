@@ -164,7 +164,7 @@ namespace Game2048
             this.labelScore.Name = "labelScore";
             this.labelScore.Size = new System.Drawing.Size(19, 20);
             this.labelScore.TabIndex = 6;
-            this.labelScore.Text = "0";
+            this.labelScore.Text = "4";
             // 
             // pictureBox1
             // 

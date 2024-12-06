@@ -16,7 +16,7 @@ namespace Game2048
         static int[,] gameField;
         static int[,] savedField;
         static int[] values = new int[100];
-        static int maxValue = 2;
+        static int maxValue = 4;
 
         public FormGame()
         {
@@ -47,10 +47,6 @@ namespace Game2048
 
             NewGame();
 
-            gameField[0, 0] = 4;
-            gameField[1, 0] = 4;
-            gameField[2, 0] = 8;
-            ShowField();
             labelRecord.Text = "0";
         }
 
@@ -275,7 +271,7 @@ namespace Game2048
         {
             gameField = new int[len,len];
             DataBase.record = Math.Max(maxValue, DataBase.record);
-            maxValue = 0;
+            maxValue = 4;
             GenerateNum();
             labelRecord.Text = DataBase.record.ToString();
             ShowField();
