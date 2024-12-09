@@ -12,7 +12,7 @@ namespace Game2048
 {
     public partial class FormGame : Form
     {
-        //изменение 1
+        //изменение 2
         int len = DataBase.len;
         static int[,] gameField, savedField;
         static int[] values = new int[1000];
