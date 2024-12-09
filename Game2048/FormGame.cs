@@ -14,6 +14,7 @@ namespace Game2048
     {
         int len = DataBase.len;
         static int[,] gameField, savedField;
+        static Color[] colors;
         static int[] values = new int[1000];
         static int currentMoveScore = 0, savedMoveScore = 0;
         static int score = 0;
@@ -24,13 +25,6 @@ namespace Game2048
             InitializeComponent();
             gameField = new int[len, len];
             savedField = new int[len, len];
-        }
-
-            
-        private void FormGame_Load(object sender, EventArgs e)
-        {
-            this.Location = new Point(500, 200);
-
             int chislo = 2;
             for (int i = 0; i < 1000; i++)
             {
@@ -38,12 +32,45 @@ namespace Game2048
                 chislo *= 2;
             }
 
+            int r = 200;
+            int g = 230;
+            int b = 210;
+            colors = new Color[1000];
+            for (int i = 0; i < 1000; i++)
+            {
+                Color color = new Color();
+                r += 10;
+                g -= 25;
+                b -= 50;
+                if (b <= 0)
+                {
+                    b = 235;
+                }
+                if (g <= 150)
+                {
+                    g = 236;
+                }
+                if (r >255)
+                {
+                    r = 180;
+                }
+                color = Color.FromArgb(r, g, b);
+                colors[i] = color;
+            }
+        }
+
+            
+        private void FormGame_Load(object sender, EventArgs e)
+        {
+            this.Location = new Point(500, 200);
+
+            
+
             for (int i = 0; i <len; i++)
             {
                 dataGridViewGameField.RowCount = len;
                 dataGridViewGameField.ColumnCount = len;
                 dataGridViewGameField.Rows[i].Height = dataGridViewGameField.Columns[i].Width;
-
             }
 
             NewGame();
@@ -87,6 +114,7 @@ namespace Game2048
                 NewGame();
             }
             ShowField();
+            PaintCells();
             score += currentMoveScore;
             labelScore.Text = (score).ToString();
             currentMoveScore = 0;
@@ -272,10 +300,6 @@ namespace Game2048
 
         void GenerateNum()
         {
-            for (int i = 0; i < len; i++)
-                for (int j = 0; j < len; j++)
-                    if (dataGridViewGameField[j, i].Style.BackColor == Color.AntiqueWhite)
-                        dataGridViewGameField[j, i].Style.BackColor = Color.FromKnownColor(KnownColor.Window);
 
             if (haveEmptySlot())
             {
@@ -294,13 +318,30 @@ namespace Game2048
                 else
                     num = 2;
                 gameField[i, j] = num;
-                dataGridViewGameField[j, i].Style.BackColor = Color.AntiqueWhite;
             }
             
 
 
         }
 
+
+        void PaintCells()
+        {
+            
+            for (int i = 0; i < len; i++)
+                for (int j = 0; j < len; j++)
+                {
+                    if (dataGridViewGameField[j, i].Value == null)
+                        dataGridViewGameField[j, i].Style.BackColor = Color.FromKnownColor(KnownColor.Window);
+                    else
+                    {
+                        int id = FindStepen(gameField[i, j]);
+                        dataGridViewGameField[j, i].Style.BackColor = colors[id];
+
+                        
+                    }
+                }
+        }
 
 
         bool haveEmptySlot()
@@ -324,6 +365,7 @@ namespace Game2048
             currentMoveScore = 0;
             score = 0;
             GenerateNum();
+            PaintCells();
             labelRecord.Text = DataBase.record.ToString();
             ShowField();
         }
@@ -352,8 +394,15 @@ namespace Game2048
             return res;
         }
 
+        private void dataGridViewGameField_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ((DataGridView)sender).SelectedCells[0].Selected = false;
+            }
+            catch { }
+        }
 
-       
         private void pictureBoxExit_Click(object sender, EventArgs e)
         {
             this.Close();
