@@ -52,32 +52,32 @@ namespace Game2048
 
         private void pictureBoxPlay_MouseEnter(object sender, EventArgs e)
         {
-            pictureBoxPlay.Image = Image.FromFile("images/buttons/play_enter.png");
+            pictureBoxPlay.Image = Image.FromFile("data/images/buttons/play_enter.png");
         }
 
         private void pictureBoxPlay_MouseLeave(object sender, EventArgs e)
         {
-            pictureBoxPlay.Image = Image.FromFile("images/buttons/play.png");
+            pictureBoxPlay.Image = Image.FromFile("data/images/buttons/play.png");
         }
 
         private void pictureBoxSettings_MouseEnter(object sender, EventArgs e)
         {
-            pictureBoxSettings.Image = Image.FromFile("images/buttons/setting_enter.png");
+            pictureBoxSettings.Image = Image.FromFile("data/images/buttons/setting_enter.png");
         }
 
         private void pictureBoxSettings_MouseLeave(object sender, EventArgs e)
         {
-            pictureBoxSettings.Image = Image.FromFile("images/buttons/settings.png");
+            pictureBoxSettings.Image = Image.FromFile("data/images/buttons/settings.png");
         }
 
         private void pictureBoxExit_MouseEnter(object sender, EventArgs e)
         {
-            pictureBoxExit.Image = Image.FromFile("images/buttons/exit_enter.png");
+            pictureBoxExit.Image = Image.FromFile("data/images/buttons/exit_enter.png");
         }
 
         private void pictureBoxExit_MouseLeave(object sender, EventArgs e)
         {
-            pictureBoxExit.Image = Image.FromFile("images/buttons/exit.png");
+            pictureBoxExit.Image = Image.FromFile("data/images/buttons/exit.png");
         }
     }
 }

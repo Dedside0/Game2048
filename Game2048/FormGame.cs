@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Game2048
 {
     public partial class FormGame : Form
     {
+        
         int len = DataBase.len;
         static int[,] gameField, savedField;
         static int[] values = new int[1000];
@@ -24,18 +26,20 @@ namespace Game2048
             InitializeComponent();
             gameField = new int[len, len];
             savedField = new int[len, len];
+            
         }
 
             
         private void FormGame_Load(object sender, EventArgs e)
         {
+            
             this.Location = new Point(500, 200);
 
-            int chislo = 2;
+            int NumberForGame = 2;
             for (int i = 0; i < 1000; i++)
             {
-                values[i] = chislo;
-                chislo *= 2;
+                values[i] = NumberForGame;
+                NumberForGame *= 2;
             }
 
             for (int i = 0; i <len; i++)
@@ -45,22 +49,25 @@ namespace Game2048
                 dataGridViewGameField.Rows[i].Height = dataGridViewGameField.Columns[i].Width;
 
             }
+            
 
             NewGame();
+            ShowField();
         }
 
         
         private void dataGridViewGameField_KeyDown_1(object sender, KeyEventArgs e)
         {
-            string key = e.KeyCode.ToString().ToLower();
             for (int i = 0; i < len; i++)
                 for (int j = 0; j < len; j++)
                     savedField[i, j] = gameField[i, j];
 
+            string key = e.KeyCode.ToString().ToLower();
+
             switch (key)
             {
                 case ("w"):
-                case ("up"): UpStep(); ; break;
+                case ("up"): UpStep(); break;
                 case ("s"):
                 case ("down"): DownStep(); break;
                 case ("d"):
@@ -71,47 +78,50 @@ namespace Game2048
 
             savedMoveScore = currentMoveScore;
 
-            bool PlayerMoved = false;
-            for (int i = 0; i < len; i++)
-                for (int j = 0; j < len; j++)
-                    if( savedField[i, j] != gameField[i, j])
-                        PlayerMoved = true;
+            score += currentMoveScore;
+            labelScore.Text = score.ToString();
+            currentMoveScore = 0;
+            
 
-            if (PlayerMoved)
+            if (IsPlayerMoved())
                 GenerateNum();
 
-            if (!haveEmptySlot() && isEnd())
+            ShowField();
+
+            if (isEnd())
             {
-                ShowField();
                 MessageBox.Show("Ты проиграл! \nТы набрал : " + score + " очков");
                 NewGame();
             }
-            ShowField();
-            score += currentMoveScore;
-            labelScore.Text = (score).ToString();
-            currentMoveScore = 0;
         }
 
 
+        bool IsPlayerMoved()
+        {
+            for (int i = 0; i < len; i++)
+                for (int j = 0; j < len; j++)
+                    if (savedField[i, j] != gameField[i, j])
+                        return true;
+            return false;
+        }
         
 
 
         bool isEnd()
         {
+           
             int[,] temp = new int[len, len];
             for (int i = 0; i < len; i++)
-            {
                 for (int j = 0; j < len; j++)
-                {
                     temp[i, j] = gameField[i, j];
-                }
-            }
+
             RightStep();
             LeftStep();
             UpStep();
             DownStep();
             currentMoveScore = 0;
-            if(haveEmptySlot())
+
+            if (haveEmptySlot())
             {
                 for (int i = 0; i < len; i++)
                     for (int j = 0; j < len; j++)
@@ -119,7 +129,6 @@ namespace Game2048
                 return false;
             }
             return true;
-            
         }
 
 
@@ -147,7 +156,6 @@ namespace Game2048
                     }
 
         }
-
 
         void LeftStep()
         {
@@ -199,7 +207,6 @@ namespace Game2048
                     }
         }
 
-
         void UpStep()
         {
             for (int j = 0; j < len; j++) 
@@ -230,46 +237,7 @@ namespace Game2048
 
 
 
-        /*
-        void GenerateNum()
-        {
-            for (int i = 0; i < len; i++)
-            {
-                for (int j = 0; j < len; j++)
-                {
-                    if (dataGridViewGameField[j, i].Style.BackColor == Color.AntiqueWhite)
-                        dataGridViewGameField[j, i].Style.BackColor = Color.FromKnownColor(KnownColor.Window);
-                }
-            }
-
-            int min = gameField[0, 0];
-            for (int i = 0; i < len; i++)
-            {
-                for (int j = 0; j < len; j++)
-                    if(gameField[i,j] < min)
-                        min = gameField[i, j];
-            }
-
-            if (haveEmptySlot())
-            {
-                
-                int i = rnd.Next(len);
-                int j = rnd.Next(len);
-                while (gameField[i, j] != 0)
-                {
-                    i = rnd.Next(len);
-                    j = rnd.Next(len);
-                }
-                int indMin = FindStepen(min);
-                if (FindStepen(currentMoveScore) > 4)
-                    gameField[i, j] = values[rnd.Next(indMin - 2, indMin)];
-                else
-                    gameField[i, j] = values[rnd.Next(FindStepen(currentMoveScore / 128), FindStepen(currentMoveScore))];
-                dataGridViewGameField[j, i].Style.BackColor =  Color.AntiqueWhite;
-
-            }
-        }  */
-
+        //Генерация числа
         void GenerateNum()
         {
             for (int i = 0; i < len; i++)
@@ -320,47 +288,29 @@ namespace Game2048
         void NewGame()
         {
             gameField = new int[len,len];
-            DataBase.record = Math.Max(score, DataBase.record);
+            savedMoveScore = 0;
             currentMoveScore = 0;
+
+            StreamReader sr = new StreamReader("data/Record.txt");
+            int record = Convert.ToInt32(sr.ReadLine());
+            record = Math.Max(score, record);
+            sr.Close();
+
+            StreamWriter sw = new StreamWriter("data/Record.txt");
+            sw.Write(record);
+            sw.Close();
+
             score = 0;
+            labelRecord.Text = record.ToString();
+            labelScore.Text = score.ToString();
             GenerateNum();
-            labelRecord.Text = DataBase.record.ToString();
+            for (int i = 0; i < len; i++)
+                for (int j = 0; j < len; j++)
+                    savedField[i, j] = gameField[i, j];
             ShowField();
         }
 
-
-        void ShowField()
-        {
-            for (int i = 0; i < len; i++)
-                for (int j = 0; j < len; j++)
-                    if (gameField[i, j] == 0)
-                        dataGridViewGameField[j, i].Value = null;
-                    else
-                        dataGridViewGameField[j, i].Value = gameField[i, j];
-        }
-
-
-        int FindStepen(int a)
-        {
-            int res = 1;
-            int temp = 2;
-            while (temp < a)
-            {
-                temp *= 2;
-                res++;
-            }
-            return res;
-        }
-
-
-       
-        private void pictureBoxExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            Forms.MENU.Show();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBoxCancel_Click(object sender, EventArgs e)
         {
             score -= savedMoveScore;
             for (int i = 0; i < len; i++)
@@ -374,6 +324,27 @@ namespace Game2048
             ShowField();
             savedMoveScore = 0;
         }
+
+        void ShowField()
+        {
+            for (int i = 0; i < len; i++)
+                for (int j = 0; j < len; j++)
+                    if (gameField[i, j] == 0)
+                        dataGridViewGameField[j, i].Value = null;
+                    else
+                        dataGridViewGameField[j, i].Value = gameField[i, j];
+        }
+
+
+        
+       
+        private void pictureBoxExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Forms.MENU.Show();
+        }
+
+        
 
     }
 }

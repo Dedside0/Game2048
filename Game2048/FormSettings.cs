@@ -21,6 +21,7 @@ namespace Game2048
         
         private void trackBar1_Scroll_1(object sender, EventArgs e)
         {
+            
             DataBase.len = trackBar1.Value;
             switch (DataBase.len)
             {

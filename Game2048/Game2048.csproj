@@ -101,28 +101,31 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="images\buttons\exit.png">
+    <Content Include="data\images\buttons\exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\buttons\exit_enter.png">
+    <Content Include="data\images\buttons\exit_enter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\buttons\play.png">
+    <Content Include="data\images\buttons\play.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\buttons\play_enter.png">
+    <Content Include="data\images\buttons\play_enter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\buttons\settings.png">
+    <Content Include="data\images\buttons\settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\buttons\setting_enter.png">
+    <Content Include="data\images\buttons\setting_enter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\record.png">
+    <Content Include="data\images\record.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\score.png">
+    <Content Include="data\images\score.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\Record.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
