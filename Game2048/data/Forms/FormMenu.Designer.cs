@@ -95,13 +95,13 @@ namespace Game2048
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(224)))), ((int)(((byte)(200)))));
             this.ClientSize = new System.Drawing.Size(600, 646);
-            this.ControlBox = false;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBoxExit);
             this.Controls.Add(this.pictureBoxSettings);
             this.Controls.Add(this.pictureBoxPlay);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FormMenu";
-            this.ShowIcon = false;
             this.Text = "2048";
             this.Load += new System.EventHandler(this.FormMenu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlay)).EndInit();
