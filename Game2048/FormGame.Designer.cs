@@ -79,6 +79,7 @@ namespace Game2048
             this.dataGridViewGameField.Location = new System.Drawing.Point(126, 179);
             this.dataGridViewGameField.MultiSelect = false;
             this.dataGridViewGameField.Name = "dataGridViewGameField";
+            this.dataGridViewGameField.ReadOnly = true;
             this.dataGridViewGameField.RowHeadersVisible = false;
             this.dataGridViewGameField.Size = new System.Drawing.Size(450, 450);
             this.dataGridViewGameField.TabIndex = 1;
@@ -88,21 +89,25 @@ namespace Game2048
             // 
             this.Column1.HeaderText = "Column1";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
             // Column2
             // 
             this.Column2.HeaderText = "Column2";
             this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
             // Column3
             // 
             this.Column3.HeaderText = "Column3";
             this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "Column4";
             this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // labelRecord
             // 

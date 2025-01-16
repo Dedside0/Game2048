@@ -43,6 +43,13 @@ namespace Game2048
         private void FormSettings_Load(object sender, EventArgs e)
         {
             this.Location = new Point(500, 200);
+            switch (DataBase.len)
+            {
+                case (4): trackBar1.Value = 1; break;
+                case (6): trackBar1.Value = 2; break;
+                case (8): trackBar1.Value = 3; break;
+                case (10): trackBar1.Value = 4; break;
+            }
         }
     }
 }
